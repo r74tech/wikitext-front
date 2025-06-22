@@ -35,8 +35,7 @@ class WorkerManager {
 					}
 				};
 
-				this.worker.onerror = (error) => {
-					console.error("Worker error:", error);
+				this.worker.onerror = () => {
 					reject(new Error("Worker error"));
 				};
 

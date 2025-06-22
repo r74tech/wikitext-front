@@ -13,7 +13,7 @@
 		"check:file": "oxlint",
 		"format": "biome format --write .",
 		"format:check": "biome format .",
-		"check": "pnpm typecheck && pnpm lint && pnpm format:check"
+		"check": "pnpm typecheck && pnpm lint:strict && pnpm format:check"
 	},
 	"dependencies": {
 		"@reduxjs/toolkit": "^2.8.2",
