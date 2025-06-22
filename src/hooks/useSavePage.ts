@@ -12,63 +12,63 @@ import { setRevisionCount, setSaving, setShortId } from "../store/pageSlice";
 import FtmlWorker from "../workers/ftml.worker.ts?worker";
 
 export function useSavePage() {
-	const dispatch = useAppDispatch();
-	const { shortId } = useAppSelector((state) => state.page);
-	const userId = useAppSelector((state) => state.user.userId);
+    const dispatch = useAppDispatch();
+    const { shortId } = useAppSelector((state) => state.page);
+    const userId = useAppSelector((state) => state.user.userId);
 
-	const savePage = useCallback(
-		async (title: string, source: string): Promise<Result<Page, Error>> => {
-			dispatch(setSaving(true));
+    const savePage = useCallback(
+        async (title: string, source: string): Promise<Result<Page, Error>> => {
+            dispatch(setSaving(true));
 
-			try {
-				const ftmlServiceResult = await createFtmlService(FtmlWorker);
-				if (ftmlServiceResult.isErr()) {
-					dispatch(setSaving(false));
-					return err(ftmlServiceResult.error);
-				}
+            try {
+                const ftmlServiceResult = await createFtmlService(FtmlWorker);
+                if (ftmlServiceResult.isErr()) {
+                    dispatch(setSaving(false));
+                    return err(ftmlServiceResult.error);
+                }
 
-				const repository = new HybridPageRepository(API_BASE_URL, userId);
-				const pageService = new PageService(ftmlServiceResult.value, repository);
+                const repository = new HybridPageRepository(API_BASE_URL, userId);
+                const pageService = new PageService(ftmlServiceResult.value, repository);
 
-				let result: Result<Page, Error>;
+                let result: Result<Page, Error>;
 
-				if (shortId) {
-					result = await pageService.updatePageContent(
-						shortId as PageId,
-						title as PageTitle,
-						source as FtmlSource,
-					);
-				} else {
-					const tempId = `new-${nanoid(10)}`;
-					result = await pageService.createNewPage(
-						tempId as PageId,
-						title as PageTitle,
-						source as FtmlSource,
-					);
+                if (shortId) {
+                    result = await pageService.updatePageContent(
+                        shortId as PageId,
+                        title as PageTitle,
+                        source as FtmlSource,
+                    );
+                } else {
+                    const tempId = `new-${nanoid(10)}`;
+                    result = await pageService.createNewPage(
+                        tempId as PageId,
+                        title as PageTitle,
+                        source as FtmlSource,
+                    );
 
-					if (result.isOk() && result.value.shortId) {
-						const shortIdValue =
-							typeof result.value.shortId === "string"
-								? result.value.shortId
-								: (result.value.shortId as string);
-						dispatch(setShortId(shortIdValue));
-					}
-				}
+                    if (result.isOk() && result.value.shortId) {
+                        const shortIdValue =
+                            typeof result.value.shortId === "string"
+                                ? result.value.shortId
+                                : (result.value.shortId as string);
+                        dispatch(setShortId(shortIdValue));
+                    }
+                }
 
-				if (result.isOk()) {
-					dispatch(setRevisionCount(result.value.revisionCount));
-				} else {
-				}
+                if (result.isOk()) {
+                    dispatch(setRevisionCount(result.value.revisionCount));
+                } else {
+                }
 
-				dispatch(setSaving(false));
-				return result;
-			} catch (error) {
-				dispatch(setSaving(false));
-				throw error;
-			}
-		},
-		[dispatch, shortId, userId],
-	);
+                dispatch(setSaving(false));
+                return result;
+            } catch (error) {
+                dispatch(setSaving(false));
+                throw error;
+            }
+        },
+        [dispatch, shortId, userId],
+    );
 
-	return { savePage };
+    return { savePage };
 }

@@ -7,15 +7,15 @@ import { store } from "./store";
 import "./styles/index.css";
 
 ReactDOM.createRoot(document.getElementById("container-wrap-wrap") as HTMLElement).render(
-	<StrictMode>
-		<Provider store={store}>
-			<HashRouter>
-				<Routes>
-					<Route path="/" element={<App />} />
-					<Route path="/share/:shortId" element={<App />} />
-					<Route path="*" element={<App />} />
-				</Routes>
-			</HashRouter>
-		</Provider>
-	</StrictMode>,
+    <StrictMode>
+        <Provider store={store}>
+            <HashRouter>
+                <Routes>
+                    <Route path="/" element={<App />} />
+                    <Route path="/share/:shortId" element={<App />} />
+                    <Route path="*" element={<App />} />
+                </Routes>
+            </HashRouter>
+        </Provider>
+    </StrictMode>,
 );

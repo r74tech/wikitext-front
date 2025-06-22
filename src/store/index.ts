@@ -3,10 +3,10 @@ import pageReducer from "./pageSlice";
 import userReducer from "./userSlice";
 
 export const store = configureStore({
-	reducer: {
-		page: pageReducer,
-		user: userReducer,
-	},
+    reducer: {
+        page: pageReducer,
+        user: userReducer,
+    },
 });
 
 export type RootState = ReturnType<typeof store.getState>;

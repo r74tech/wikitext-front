@@ -1,7 +1,7 @@
 declare const brand: unique symbol;
 
 export type Brand<T, TBrand extends string> = T & {
-	[brand]: TBrand;
+    [brand]: TBrand;
 };
 
 export type PageId = Brand<string, "PageId">;
@@ -20,9 +20,9 @@ export const HtmlContent = (html: string): HtmlContent => html as HtmlContent;
 export const PageTitle = (title: string): PageTitle => title as PageTitle;
 
 export const isPageId = (value: unknown): value is PageId =>
-	typeof value === "string" && value.length > 0;
+    typeof value === "string" && value.length > 0;
 
 export const isShortId = (value: unknown): value is ShortId =>
-	typeof value === "string" && /^[a-zA-Z0-9]{6,}$/.test(value);
+    typeof value === "string" && /^[a-zA-Z0-9]{6,}$/.test(value);
 
 export const isFtmlSource = (value: unknown): value is FtmlSource => typeof value === "string";
