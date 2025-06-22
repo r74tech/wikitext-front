@@ -10,7 +10,7 @@ const Header: React.FC = memo(() => {
         <div id="header">
             <h1>
                 <a href="/" className="active">
-                    <span>Wikitext Previewer</span>
+                    <span>Wikitext Previewer v3</span>
                 </a>
             </h1>
             <h2>
