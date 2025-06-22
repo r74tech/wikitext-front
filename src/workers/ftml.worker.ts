@@ -1,10 +1,4 @@
-import {
-    init,
-    loading,
-    makeInfo,
-    ready,
-    renderHTML,
-} from "../../lib/ftml-wasm/esm/wj-ftml-wasm.js";
+import { init, loading, makeInfo, ready, renderHTML } from "../../lib/ftml-wasm/wj-ftml-wasm.js";
 import type { ParseMetadata, ParseResult } from "../core/page";
 import { type FtmlSource, HtmlContent } from "../core/shared";
 import type { WorkerRequest, WorkerResponse } from "../types/worker";
