@@ -1,0 +1,22 @@
+{
+	"plugins": ["promise", "import", "node"],
+	"categories": {
+		"correctness": "error",
+		"suspicious": "warn"
+	},
+	"rules": {
+		"no-console": "warn",
+		"typescript/no-explicit-any": "error",
+		"import/no-unassigned-import": [
+			"warn",
+			{
+				"allow": ["**/*.css", "**/*.scss", "**/*.sass", "**/*.less"]
+			}
+		],
+		"import/default": "off"
+	},
+	"ignorePatterns": ["node_modules", "dist", "build", "coverage", "*.min.js", "lib"],
+	"settings": {
+		"import/ignore": ["\\?worker$"]
+	}
+}
