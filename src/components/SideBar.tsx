@@ -626,7 +626,7 @@ const SideBar: React.FC = () => {
                             <iframe
                                 className="html-block-iframe scpnet-interwiki-frame"
                                 src="https://interwiki.scp-jp.org/interwikiFrame.html?lang=jp&community=scp&pagename=scp-173"
-                                style={{ height: "366.039px" }}
+                                style={{ height: "370px" }}
                                 title="interwiki"
                             />
                         </p>
