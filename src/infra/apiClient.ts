@@ -73,7 +73,7 @@ export class ApiClient {
         const payload = {
             title: title as string,
             source: source as string,
-            createdBy,
+            createdBy: createdBy,
         };
         return this.fetchJson<ClientPageData>(`${this.baseUrl}/v1/data`, {
             method: "POST",
@@ -85,12 +85,12 @@ export class ApiClient {
         shortId: ShortId,
         title: PageTitle,
         source: FtmlSource,
-        createdBy: string,
+        updatedBy: string,
     ): Promise<Result<ClientPageData, Error>> {
         const payload = {
             title: title as string,
             source: source as string,
-            createdBy,
+            updatedBy: updatedBy,
         };
         return this.fetchJson<ClientPageData>(`${this.baseUrl}/v1/data/${shortId}`, {
             method: "PATCH",

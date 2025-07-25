@@ -3,15 +3,20 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useAutoSave } from "../hooks/useAutoSave";
 import { useEditor } from "../hooks/useEditor";
+import { usePageHistory } from "../hooks/usePageHistory";
 import { useAppSelector } from "../store/hooks";
 import EditAction from "./EditAction";
+import HistoryAction from "./HistoryAction";
 import PageSourceAction from "./PageSourceAction";
 
 const PageView: React.FC = () => {
-    const { title, html, styles, revisionCount, updatedAt } = useAppSelector((state) => state.page);
+    const { title, html, styles, revisionCount, updatedAt, shortId } = useAppSelector(
+        (state) => state.page,
+    );
     useEditor();
     useAutoSave();
-    const [actionMode, setActionMode] = useState<"none" | "edit" | "source">("none");
+    const { loadHistory, selectRevision, clearRevisionSelection } = usePageHistory(shortId);
+    const [actionMode, setActionMode] = useState<"none" | "edit" | "source" | "history">("none");
     const contentRef = useRef<HTMLDivElement>(null);
     const stylesRef = useRef<HTMLDivElement>(null);
 
@@ -25,9 +30,32 @@ const PageView: React.FC = () => {
         setActionMode("source");
     }, []);
 
+    const handleHistoryClick = useCallback(
+        async (e: React.MouseEvent) => {
+            e.preventDefault();
+            await loadHistory();
+            setActionMode("history");
+        },
+        [loadHistory],
+    );
+
+    const handleRevisionSelect = useCallback(
+        async (revision: number, mode: "view" | "source") => {
+            const parseResult = await selectRevision(revision, mode);
+            if (mode === "view" && parseResult && contentRef.current && stylesRef.current) {
+                contentRef.current.innerHTML = parseResult.html;
+                if (parseResult.styles) {
+                    stylesRef.current.innerHTML = `<style>${parseResult.styles.join("\n")}</style>`;
+                }
+            }
+        },
+        [selectRevision],
+    );
+
     const handleCloseAction = useCallback(() => {
         setActionMode("none");
-    }, []);
+        clearRevisionSelection();
+    }, [clearRevisionSelection]);
 
     useEffect(() => {
         if (contentRef.current) {
@@ -55,7 +83,10 @@ const PageView: React.FC = () => {
 
             <div id="page-options-container">
                 <div id="page-info">
-                    page revision: {revisionCount}, last edited: {updatedAt ? new Date(updatedAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }) : 'Never'}
+                    page revision: {revisionCount}, last edited:{" "}
+                    {updatedAt
+                        ? new Date(updatedAt).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" })
+                        : "Never"}
                 </div>
                 <div id="page-options-bottom" className="page-options-bottom">
                     <NavLink
@@ -74,6 +105,14 @@ const PageView: React.FC = () => {
                     >
                         Page Source
                     </NavLink>
+                    <NavLink
+                        className="btn btn-default"
+                        id="history-button"
+                        onClick={handleHistoryClick}
+                        to="#"
+                    >
+                        History
+                    </NavLink>
                 </div>
                 <div id="page-options-area-bottom" />
             </div>
@@ -81,6 +120,12 @@ const PageView: React.FC = () => {
             <div id="action-area" style={{ display: actionMode !== "none" ? "block" : "none" }}>
                 {actionMode === "edit" && <EditAction onClose={handleCloseAction} />}
                 {actionMode === "source" && <PageSourceAction onClose={handleCloseAction} />}
+                {actionMode === "history" && (
+                    <HistoryAction
+                        onClose={handleCloseAction}
+                        onRevisionSelect={handleRevisionSelect}
+                    />
+                )}
             </div>
         </>
     );

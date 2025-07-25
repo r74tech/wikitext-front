@@ -5,7 +5,6 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import MainContent from "./components/MainContent";
 import { API_BASE_URL } from "./config/api";
-import { useImportPreviewerData } from "./hooks/useImportPreviewerData";
 import { HybridPageRepository } from "./infra/hybridPageRepository";
 import { useAppDispatch } from "./store/hooks";
 import { setPage, setRevisionCount, setShortId, setSource, setTitle } from "./store/pageSlice";
@@ -14,8 +13,6 @@ import { setUser } from "./store/userSlice";
 function App() {
     const { shortId } = useParams<{ shortId?: string }>();
     const dispatch = useAppDispatch();
-
-    useImportPreviewerData();
 
     useEffect(() => {
         const storedUserId = localStorage.getItem("userId");
@@ -49,7 +46,7 @@ function App() {
                     dispatch(setTitle(titleValue));
                     dispatch(setSource(sourceValue));
                     dispatch(setRevisionCount(page.revisionCount));
-                    dispatch(setPage({ updatedAt: page.updatedAt }));
+                    dispatch(setPage({ updatedAt: page.updatedAt?.toISOString() }));
                 } else {
                     window.location.href = "/";
                 }

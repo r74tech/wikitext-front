@@ -9,15 +9,22 @@ interface PageSourceActionProps {
 
 const PageSourceAction: React.FC<PageSourceActionProps> = ({ onClose }) => {
     const source = useAppSelector((state) => state.page.source);
+    const selectedRevision = useAppSelector((state) => state.page.selectedRevision);
+    const revisionSource = useAppSelector((state) => state.page.revisionSource);
+
+    const displaySource = selectedRevision && revisionSource ? revisionSource : source;
+    const title = selectedRevision
+        ? `Page source Revision Number: ${selectedRevision}`
+        : "Page source";
 
     return (
         <>
             <NavLink className="action-area-close btn btn-danger" onClick={onClose} to="#">
                 <i className="icon-remove" /> Close
             </NavLink>
-            <h1>Page source</h1>
+            <h1>{title}</h1>
             <div className="page-source">
-                {source.split("\n").map((line, index) => (
+                {displaySource.split("\n").map((line, index) => (
                     // biome-ignore lint/suspicious/noArrayIndexKey: Line numbers are stable for source display
                     <Fragment key={`line-${index}`}>
                         {line}
