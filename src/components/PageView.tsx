@@ -8,7 +8,7 @@ import EditAction from "./EditAction";
 import PageSourceAction from "./PageSourceAction";
 
 const PageView: React.FC = () => {
-    const { title, html, styles, revisionCount } = useAppSelector((state) => state.page);
+    const { title, html, styles, revisionCount, updatedAt } = useAppSelector((state) => state.page);
     useEditor();
     useAutoSave();
     const [actionMode, setActionMode] = useState<"none" | "edit" | "source">("none");
@@ -55,7 +55,7 @@ const PageView: React.FC = () => {
 
             <div id="page-options-container">
                 <div id="page-info">
-                    page revision: {revisionCount}, last edited: {new Date().toLocaleString()}
+                    page revision: {revisionCount}, last edited: {updatedAt ? new Date(updatedAt).toLocaleString('ja-JP', { timeZone: 'Asia/Tokyo' }) : 'Never'}
                 </div>
                 <div id="page-options-bottom" className="page-options-bottom">
                     <NavLink

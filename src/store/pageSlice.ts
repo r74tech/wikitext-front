@@ -9,6 +9,7 @@ export interface PageState {
     isSaving: boolean;
     lastSaved?: Date;
     revisionCount: number;
+    updatedAt?: Date;
 }
 
 const initialState: PageState = {

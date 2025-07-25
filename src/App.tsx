@@ -49,6 +49,7 @@ function App() {
                     dispatch(setTitle(titleValue));
                     dispatch(setSource(sourceValue));
                     dispatch(setRevisionCount(page.revisionCount));
+                    dispatch(setPage({ updatedAt: page.updatedAt }));
                 } else {
                     window.location.href = "/";
                 }
