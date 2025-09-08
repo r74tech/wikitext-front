@@ -16,7 +16,7 @@
         "check": "pnpm typecheck && pnpm lint:strict && pnpm format:check"
     },
     "dependencies": {
-        "@reduxjs/toolkit": "^2.8.2",
+        "@reduxjs/toolkit": "^2.9.0",
         "idb": "^8.0.3",
         "nanoid": "^5.1.5",
         "neverthrow": "^8.2.0",
