@@ -31,7 +31,7 @@
         "@types/node": "^24.4.0",
         "@types/react": "^19.1.13",
         "@types/react-dom": "^19.1.9",
-        "@typescript/native-preview": "7.0.0-dev.20250907.1",
+        "@typescript/native-preview": "7.0.0-dev.20250914.1",
         "@vitejs/plugin-react": "^5.0.2",
         "@vitest/coverage-v8": "^3.2.4",
         "eslint": "^9.35.0",
