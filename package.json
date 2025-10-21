@@ -42,7 +42,7 @@
         "oxlint": "^1.23.0",
         "typescript": "~5.9.3",
         "typescript-eslint": "^8.46.1",
-        "vite": "^7.1.10",
+        "vite": "^7.1.11",
         "vitest": "^3.2.4"
     },
     "pnpm": {
