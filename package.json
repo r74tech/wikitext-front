@@ -16,14 +16,14 @@
         "check": "pnpm typecheck && pnpm lint:strict && pnpm format:check"
     },
     "dependencies": {
-        "@reduxjs/toolkit": "^2.11.2",
+        "@reduxjs/toolkit": "^2.12.0",
         "idb": "^8.0.3",
         "nanoid": "^5.1.11",
         "neverthrow": "^8.2.0",
         "react": "^19.2.6",
         "react-dom": "^19.2.6",
-        "react-redux": "^9.2.0",
-        "react-router-dom": "^7.15.0"
+        "react-redux": "^9.3.0",
+        "react-router-dom": "^7.15.1"
     },
     "devDependencies": {
         "@biomejs/biome": "^2.4.15",
